@@ -155,13 +155,13 @@ class BitDrizzle:
     #def read_from_net(self, hash_code):
     #    return
 
-    def read_local(self):
-        return
+    def read_local(self, hash_code):
+        return self.myNode.readLocal(hash_code)
 
     def delete_from_net(self, hash_code):
         return self.myNode.deleteFromNet(hash_code)
 
-    def delete_local(self):
-        return
+    def delete_local(self, hash_code):
+        return self.myNode.deleteLocal(hash_code)
 
 

@@ -104,8 +104,13 @@ class LocalHead:
 
     #def readFromNet(self, key):
 
-	#def readLocal(self, key):
-	#def deleteLocal(self, key):
+    def readLocal(self, key):
+        value = self.data.read(key)
+        return value
+
+    def deleteLocal(self, key):
+        self.data.write(key, "0")
+        return ("Deleted " + key)
 
     #for printing the data
     def DumpLocalData(self):

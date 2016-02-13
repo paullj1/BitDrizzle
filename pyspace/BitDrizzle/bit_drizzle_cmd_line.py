@@ -32,6 +32,8 @@ def print_command_line_help():
     print("D - Delete Data:  Enter D, with options Ex: DN <key>  (delete data from network at key)")
     print("                         - option L for app_support, N for network, deletes data from app_support or network store")
     print("                         - option K takes a key, default is test_key entry in config.py")
+    print("LD - Local Data Dump: Output all the data in the local store ")
+    print("PD - Local Data Dump: Output all the data in the peer head data store ")
     print("X - Exit BitDrizzle: Just exits the app")
 
 def file_reader(file_name):
@@ -108,6 +110,20 @@ def main():
                 except Exception as e:
                     piece_size = config.piece_size
                 print(bd.write_local(file_contents, piece_size))
+            elif cmd[0] == 'RL':
+                try:
+                    hash_code = cmd[1]
+                except Exception as e:
+                    hash_code = config.test_key
+                print(bd.read_local(hash_code))
+                #print("Read Data at " + hash_code)
+            elif cmd[0] == 'DL':
+                try:
+                    hash_code = cmd[1]
+                except Exception as e:
+                    hash_code = config.test_key
+                print(bd.delete_local(hash_code))
+                #print("Delete Data at " + hash_code)
             elif cmd[0] == 'WN':
                 file_contents = ""
                 try:
@@ -120,7 +136,7 @@ def main():
                     piece_size = config.piece_size
                 print(bd.write_to_net(file_contents, piece_size))
             elif cmd[0] == 'RN':
-                print("Read Data...")
+                print("Read Network Data...")
             elif cmd[0] == 'DN':
                 try:
                     hash_code = cmd[1]
