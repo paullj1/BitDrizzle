@@ -120,12 +120,7 @@ def main():
                     piece_size = config.piece_size
                 print(bd.write_to_net(file_contents, piece_size))
             elif cmd[0] == 'RN':
-                try:
-                    hash_code = cmd[1]
-                except Exception as e:
-                    hash_code = config.test_key
-                print(bd.read_from_net(hash_code))
-                #print("Read Data at " + hash_code)
+                print("Read Data...")
             elif cmd[0] == 'DN':
                 try:
                     hash_code = cmd[1]

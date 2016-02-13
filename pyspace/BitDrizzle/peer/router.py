@@ -130,10 +130,8 @@ class Router:
         # the server at succ is contacted, response is the okay
         response = client.attempt_to_connect(succ_node.host, succ_node.port, msg)
         # the server returned the predecessor
-        #print ("Write:" + response)
         if response == "":
-            print("NO WRITE RESPONSE ERROR!")
-            exit(0)
+            return ("NO READ RESPONSE ERROR!")
         if response == "OK":
             return True
         return False
@@ -147,14 +145,8 @@ class Router:
         # the server at succ is contacted, response is the okay
         response = client.attempt_to_connect(succ_node.host, succ_node.port, msg)
         # the server returned the predecessor
-        #print ("Write:" + response)
         if response == "":
-            print("NO READ RESPONSE ERROR!")
-            exit(0)
+            return ("NO READ RESPONSE ERROR!")
         if response == " ":
             return None
         return response
-
-	#TODO: implement these functions
-	#def read(self, d_item, succ_node):
-	#def delete(self, d_item, succ_node):

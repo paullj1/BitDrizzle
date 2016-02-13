@@ -152,8 +152,8 @@ class BitDrizzle:
     #
     '''
 
-    def read_from_net(self, hash_code):
-        return self.myNode.readFromNet(hash_code)
+    #def read_from_net(self, hash_code):
+    #    return
 
     def read_local(self):
         return

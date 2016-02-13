@@ -100,15 +100,10 @@ class LocalHead:
         # send the data and return
         return client.connect_send__receive_close(self.host, self.port, msg)
 
-    def readFromNet(self, key):
-        # we need a client to talk to the peer head
-        client = Simple_Client(self.host, self.port)
-        # put a header so the app_support server knows what to do with the data string
-        msg = "READ|" + key
-        # send the data and return
-        return client.connect_send__receive_close(self.host, self.port, msg)
-
 	#Implement these functions
+
+    #def readFromNet(self, key):
+
 	#def readLocal(self, key):
 	#def deleteLocal(self, key):
 

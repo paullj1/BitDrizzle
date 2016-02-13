@@ -98,16 +98,8 @@ class Simple_Listener():
             self.head.router.write(key, value, data_succ)
             return "OK"
 
-        if (m[0] == "READ"):
-            if (len(m) < 2):
-                return "NEED HASH CODE"
-            hash_code = m[1]
-            data_succ = self.head.router.lookup(hash_code, self.head.router.succ)
-            value = self.head.router.read(hash_code, data_succ)
-            if not value == None:
-                return "From " + data_succ.toString() + " : "  + value
-            return "READ FAILED!"
-            #return self.head.router.lookup(hash_code, self.head.router.getEntry()).toString()
+        #if (m[0] == "READ"):
+
 
 
         if (m[0] == "DELETE"):
