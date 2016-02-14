@@ -37,7 +37,7 @@ class Data():
         except:
             return "failed read"
     # to string function
-    def toString(self):
+    def __str__(self):
         if bool(self.data):
             return ('\n'.join("{!s},{!r}".format(k,v) for (k,v) in self.data.items()))
         return "Data is empty"
