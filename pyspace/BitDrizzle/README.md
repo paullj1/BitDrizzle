@@ -16,6 +16,7 @@ To configure, open the config.py file in a text editor and change basic settings
 To run, execute `python3 bit_drizzle_cmd_line.py` and type H, for example:
 
 ###Enter a command or type H for help:
+<pre>
 H - Help Menu
 LL - Local Listener: Checks if the Drizzler app_support listener is listening for commands
 MM - Multi Mode: Makes the program set up all network nodes
@@ -35,9 +36,11 @@ D - Delete Data:  Enter D, with options Ex: DN <key>  (delete data from network 
                          - option L for app_support, N for network, deletes data from app_support or network store
                          - option K takes a key, default is test_key entry in config.py
 X - Exit BitDrizzle: Just exits the app
+</pre>
 
 
 ###Steps to add functionality:
+
 1. Add command in CLI and test CLI by printing call to console
 2. Add stub method in API and call it from the CLI, printing string to console
 3. Add to new method in API so it calls a stub in local_head, printing string to console
@@ -53,6 +56,7 @@ X - Exit BitDrizzle: Just exits the app
 
 ###Future Extensions
 This code base might be adapted for many purposes. They are listed here to remind you of the course material and inspire you in your projects:
+
 1.	Port to real networks. Changing this to work for Rasp Pi over WiFi or among a network of virtual machines will involve some tweaking. One change will be to replace the broadcast function for ports to one for IPs. 
 2.	Topology Management. Use a network management layer that changes the topology of the underlying P2P network or find ways to build routing trees. 
 3.	Hybrid Architectures. Combining P2P networks and client-broker-server paradigms can result in varied topologies that may be tailored for a particular setting of your interest.
