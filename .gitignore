@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 # ________________________________  Python ____________________________________
-=======
->>>>>>> 0cefe66fce0f99a1a0af9321a575243e82b4a242
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -73,7 +70,6 @@ target/
 # pyenv
 .python-version
 
-<<<<<<< HEAD
 # _________________________  vim (the only editor) ____________________________
 # swap
 [._]*.s[a-w][a-z]
@@ -110,5 +106,3 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-=======
->>>>>>> 0cefe66fce0f99a1a0af9321a575243e82b4a242
