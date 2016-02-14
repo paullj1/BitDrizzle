@@ -6,7 +6,9 @@ Supports data operation of writing to a key value store
 Written by John Pecarina, Air Force Institute of Technology,
 john.pecarina@afit.edu
 Feb 1 2016
-Modified by _______________, Date:
+
+Modified by Colin Busho, Kevin Cooper, Paul Jordan, and Chip Van Patten
+Last Modified:  14 Feb 2016
 '''
 import time
 
