@@ -57,23 +57,23 @@ X - Exit BitDrizzle: Just exits the app
 ###Future Extensions
 This code base might be adapted for many purposes. They are listed here to remind you of the course material and inspire you in your projects:
 
-1.	Port to real networks. Changing this to work for Rasp Pi over WiFi or among a network of virtual machines will involve some tweaking. One change will be to replace the broadcast function for ports to one for IPs. 
-2.	Topology Management. Use a network management layer that changes the topology of the underlying P2P network or find ways to build routing trees. 
-3.	Hybrid Architectures. Combining P2P networks and client-broker-server paradigms can result in varied topologies that may be tailored for a particular setting of your interest.
-4.	Virtualization. Simulate the addition of new nodes in the network to handle load balancing of data items when required. When is it appropriate to add or remove nodes?
-5.	Parallelization. Use the code base to distribute data to various processing nodes. Each processing node can have its own processing service that executes an operation on the data and returns a message with the results. One could even migrate code and processes to nodes where data processing is building up.
-6.	Multithreading and synchronization. The client lookups, writes and reads could all be multithreaded to speed up processing if the nodes are on their own system. Multithreading and the possibility of multiple server requests in a real network will require synchronization variables so that nodes can have many open connections and many concurrent processes.
-7.	Improved lookup. Chord enables this with finger tables that address with logarithmic scale, Kadmelia adds the XOR function. These methods require a finger table and function that constantly updates.
-8.	Random P2P systems. Abandon hash codes and just choose your neighbors at random or using the small world approach. Investigate the effects of using various probability distribution functions and node degrees.
-9.	Information Dissemination. Add a gossip protocol or a gossip protocol with rumor mongering to improve communications usage over the flooding approach.
-10.	Clock Synchronization. Send clock values through the network, track drift over time and determine ways to adjust them.
-11.	Total Ordering. Forget making clocks the same, but determine how to implement a system that ensures events are ordered even if the timestamps are wrong.
-12.	Detecting and handling node failures. Either are tough problems. One, because the pred/succ links would be broken. Two, because data could be permanently lost. Three, because it could be disrupting service for users. 
-13.	Distributed Snapshot. Take a picture of the network and restore to that point at some arbitrary time. 
-14.	Distributed Transactions. Use the P2P network to build a P2P financial transaction system. Need an example? Read up on BitCoin.
-15.	Replication. Replication is good for networks that have a large number of reads. It also helps add robustness. However, tracking, storing and retrieving duplicates is not trivial. 
-16.	Distributed file or databases.  Using the DHT, you can route messages that call other API’s. A trivial example is sending a http query and having the receiving node call it. File system access and database access can use similar command encapsulation to add easy functionality to your P2P network.
-17.	Dropbox like folder synching. If you have the P2P network set up with file system calls, it would take a few minor steps for building a program that monitors file folders and then sends new files into the DHT for storage. Load a new computer with the same client to get the folder synched.
-18.	Bittorrent like content distribution. Storing a file means splitting it into parts. Retrieving a file means getting the file of hash references, retrieving them all and then assembling.
-19.	Authentication. You can use encryption and key distribution to make sure no one gets into your services but your authorized clients.
+1.	**Port to real networks** Changing this to work for Rasp Pi over WiFi or among a network of virtual machines will involve some tweaking. One change will be to replace the broadcast function for ports to one for IPs. 
+2.	**Topology Management** Use a network management layer that changes the topology of the underlying P2P network or find ways to build routing trees. 
+3.	**Hybrid Architectures** Combining P2P networks and client-broker-server paradigms can result in varied topologies that may be tailored for a particular setting of your interest.
+4.	**Virtualization** Simulate the addition of new nodes in the network to handle load balancing of data items when required. When is it appropriate to add or remove nodes?
+5.	**Parallelization** Use the code base to distribute data to various processing nodes. Each processing node can have its own processing service that executes an operation on the data and returns a message with the results. One could even migrate code and processes to nodes where data processing is building up.
+6.	**Multithreading and synchronization** The client lookups, writes and reads could all be multithreaded to speed up processing if the nodes are on their own system. Multithreading and the possibility of multiple server requests in a real network will require synchronization variables so that nodes can have many open connections and many concurrent processes.
+7.	**Improved lookup** Chord enables this with finger tables that address with logarithmic scale, Kadmelia adds the XOR function. These methods require a finger table and function that constantly updates.
+8.	**Random P2P systems** Abandon hash codes and just choose your neighbors at random or using the small world approach. Investigate the effects of using various probability distribution functions and node degrees.
+9.	**Information Dissemination** Add a gossip protocol or a gossip protocol with rumor mongering to improve communications usage over the flooding approach.
+10.	**Clock Synchronization** Send clock values through the network, track drift over time and determine ways to adjust them.
+11.	**Total Ordering** Forget making clocks the same, but determine how to implement a system that ensures events are ordered even if the timestamps are wrong.
+12.	**Detecting and handling node failures** Either are tough problems. One, because the pred/succ links would be broken. Two, because data could be permanently lost. Three, because it could be disrupting service for users. 
+13.	**Distributed Snapshot** Take a picture of the network and restore to that point at some arbitrary time. 
+14.	**Distributed Transactions** Use the P2P network to build a P2P financial transaction system. Need an example? Read up on BitCoin.
+15.	**Replication** Replication is good for networks that have a large number of reads. It also helps add robustness. However, tracking, storing and retrieving duplicates is not trivial. 
+16.	**Distributed file or databases**  Using the DHT, you can route messages that call other API’s. A trivial example is sending a http query and having the receiving node call it. File system access and database access can use similar command encapsulation to add easy functionality to your P2P network.
+17.	**Dropbox like folder synching** If you have the P2P network set up with file system calls, it would take a few minor steps for building a program that monitors file folders and then sends new files into the DHT for storage. Load a new computer with the same client to get the folder synched.
+18.	**Bittorrent like content distribution** Storing a file means splitting it into parts. Retrieving a file means getting the file of hash references, retrieving them all and then assembling.
+19.	**Authentication** You can use encryption and key distribution to make sure no one gets into your services but your authorized clients.
 
