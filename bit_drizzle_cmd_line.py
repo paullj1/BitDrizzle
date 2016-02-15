@@ -68,7 +68,10 @@ def main():
     print("#######################################################################")
 
     while True:
-        cmd_string = input("Enter a command or type H for help: " or "!")
+        try:
+          cmd_string = input("Enter a command or type H for help: " or "!")
+        except EOFError:
+          cmd_string = 'X'
         if not (len(cmd_string) == 0):
             cmd = cmd_string.upper().split()
             if cmd[0] == 'H':
