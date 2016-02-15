@@ -1,12 +1,14 @@
 import hashlib      #used for md5 hash
 
+
 # class for a generic string based key-value store
-class DataItem():
+class DataItem:
 
     # Constructor for a data item which is a value and the hash of that value
     def __init__(self, value):
         self.value = value
-        self.key = self.getHash(value)
+        #Since the command line makes every upper case
+        self.key = self.getHash(value).upper()
 
     # uses an MD5 hash function to return the key of the value string
     def getHash(self, value):
@@ -16,22 +18,22 @@ class DataItem():
 '''
     This class specifies the data storage for the node.
 '''
-class Data():
+class Data:
 
     # Constructor
     def __init__(self):
         self.data = {}     # data storage using (key, value) pairs
 
     # Writes a data item into this nodes hash table
-    def write(self, d_item_key, d_item_value):
+    def write(self, d_item_key: str, d_item_value: str) -> str:
         try:
             # write the data item with updated counts
             self.data[d_item_key] = d_item_value
             return "OK"
-        except:
-            return "failed write"
+        except Exception as e:
+            return "Failed write: {0}".format(e)
 
-    def read(self, d_item_key):
+    def read(self, d_item_key: str) -> str:
         return self.data[d_item_key] if d_item_key in self.data else "failed read"
 
     # to string function

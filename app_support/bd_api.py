@@ -106,7 +106,7 @@ class BitDrizzle:
         return
 
     # data management API
-    def write_to_net(self, data_string, piece_size):
+    def write_to_net(self, data_string: str, piece_size: int) -> str:
         start_time = time.time()
         parts = int(len(data_string) / piece_size)
         last_part = int(len(data_string) % piece_size)
@@ -123,7 +123,7 @@ class BitDrizzle:
         return ("Wrote " + str(total_bytes) + " bytes with " + str(total_parts) +
                     " parts in " + str(total_real_time) + " seconds")
 
-    def write_local(self, data_string, piece_size):
+    def write_local(self, data_string: str, piece_size: int) -> str:
         start_time = time.time()
         parts = int(len(data_string) / piece_size)
         last_part = int(len(data_string) % piece_size)
@@ -152,23 +152,29 @@ class BitDrizzle:
     #
     '''
 
-    def read_from_net(self, hash_code):
+    def read_from_net(self, hash_code: str) -> str:
         start_time = time.time()
         data = self.myNode.readFromNet(hash_code)
         total_real_time = time.time() - start_time
         total_bytes = len(data)
         return "Read {0} bytes in {1} seconds and got:\n{2}".format(total_bytes, total_real_time, data)
 
-    def read_local(self):
+    def read_local(self, hash_code: str) -> str:
         start_time = time.time()
         data = self.myNode.readLocal(hash_code)
         total_real_time = time.time() - start_time
         total_bytes = len(data)
         return "Read {0} bytes in {1} seconds and got:\n{2}".format(total_bytes, total_real_time, data)
 
-    def delete_from_net(self):
-        return
+    def delete_from_net(self, hash_code: str) -> str:
+        start_time = time.time()
+        data = self.myNode.deleteFromNet(hash_code)
+        total_real_time = time.time() - start_time
+        return "Deleted key {0} in {1} seconds.".format(hash_code, total_real_time)
 
-    def delete_local(self):
-        return
+    def delete_local(self,hash_code: str) -> str:
+        start_time = time.time()
+        self.myNode.deleteLocal(hash_code)
+        total_real_time = time.time() - start_time
+        return "Deleted key {0} in {1} seconds.".format(hash_code, total_real_time)
 

@@ -82,7 +82,7 @@ class LocalHead:
         return d_item.key
 
 	# function writes to the network
-    def writeToNet(self, value):
+    def writeToNet(self, value: str) -> str:
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)
         # put a header so the app_support server knows what to do with the data string
@@ -92,7 +92,7 @@ class LocalHead:
         client.connect_send__receive_close(self.host, self.port, msg)
         return d_item.key
 
-    def deleteFromNet(self, key):
+    def deleteFromNet(self, key: str) -> str:
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)
         # put a header so the app_support server knows what to do with the data string
@@ -121,20 +121,20 @@ class LocalHead:
         # send the data and return
         return client.connect_send__receive_close(self.host, self.port, msg)
 
-    def readLocal(self, key):
+    def readLocal(self, key: str) -> str:
         value = self.data.read(key)
         return value
 
-    def deleteLocal(self, key):
+    def deleteLocal(self, key: str) -> str:
         self.data.write(key, "0")
         return ("Deleted " + key)
 
     #for printing the data
-    def DumpLocalData(self):
+    def DumpLocalData(self) -> str:
         return str(self.data)
 
     #for printing the data
-    def DumpPeerData(self):
+    def DumpPeerData(self) -> str:
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)
         msg = "DUMP_PEER_DATA|"

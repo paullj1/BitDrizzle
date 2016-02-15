@@ -113,16 +113,17 @@ def main():
                 piece_size = (str(cmd[2]) if len(cmd) is 3 else config.piece_size)
                 print(bd.write_to_net(file_contents, piece_size))
             elif cmd[0] == 'R':
-                print("Read Data")
+                hash_code = cmd[1] if len(cmd) is 2 else config.test_key
+                print(bd.read_local(hash_code))
             elif cmd[0] == 'D':
-                print("Delete Data")
+                hash_code = cmd[1] if len(cmd) is 2 else config.test_key
+                print(bd.delete_local(hash_code))
             elif cmd[0] == 'RN':
                 hash_code = cmd[1] if len(cmd) is 2 else config.test_key
                 print(bd.read_from_net(hash_code))
             elif cmd[0] == 'DN':
                 hash_code = cmd[1] if len(cmd) is 2 else config.test_key
                 print(bd.delete_from_net(hash_code))
-                #print("Delete Data at " + hash_code)
             elif cmd[0] == 'LD':
                 print(bd.local_dump().encode('cp437', errors='replace'))
             elif cmd[0] == 'PD':
