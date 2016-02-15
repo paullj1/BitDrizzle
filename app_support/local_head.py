@@ -87,7 +87,7 @@ class LocalHead:
         client = Simple_Client(self.host, self.port)
         # put a header so the app_support server knows what to do with the data string
         d_item = DataItem(value)
-        msg = "WRITE_DATA|" + d_item.key + "|" + d_item.value
+        msg = "WRITE_DATA|{0}|{1}".format(d_item.key,d_item.value)
         # send the data and return
         client.connect_send__receive_close(self.host, self.port, msg)
         return d_item.key
@@ -102,7 +102,24 @@ class LocalHead:
 
 	#Implement these functions
 
-    #def readFromNet(self, key):
+    def readFromNet(self, key):
+        # Check to make sure we don't have it first
+        result = self.data.read(key)
+        if result != "failed read":
+          return result
+
+        # Where is the data?
+        client_info = self.locateHash(key).split(',') 
+        if len(client_info) < 2:
+          return "FAILED TO LOCATE NODE" # Shouldn't happen
+
+        # we need a client to talk to the peer head
+        client = Simple_Client(self.host, self.port)
+        # put a header so the app_support server knows what to do with the data string
+        msg = "READ_DATA|{0}".format(key)
+        print(msg)
+        # send the data and return
+        return client.connect_send__receive_close(client_info[0], int(client_info[1]), msg)
 
     def readLocal(self, key):
         value = self.data.read(key)

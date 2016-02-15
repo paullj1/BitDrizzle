@@ -32,10 +32,8 @@ class Data():
             return "failed write"
 
     def read(self, d_item_key):
-        try:
-            return self.data[d_item_key]
-        except:
-            return "failed read"
+        return self.data[d_item_key] if d_item_key in self.data else "failed read"
+
     # to string function
     def __str__(self):
         if bool(self.data):

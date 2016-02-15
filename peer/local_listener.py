@@ -3,7 +3,9 @@ Simple Single Threaded Server
 23 Dec 2014
 Written by John Pecarina, Air Force Institute of Technology,
 john.pecarina@afit.edu
-Modified by _______________, Date: 
+
+Modified by Colin Busho, Kevin Cooper, Paul Jordan, and Chip Van Patten
+Last Modified:  14 Feb 2016
 
 This program defines the simple server class variable and calls the server into
 operation.
@@ -98,9 +100,11 @@ class Simple_Listener():
             self.head.router.write(key, value, data_succ)
             return "OK"
 
-        #if (m[0] == "READ"):
-
-
+        if (m[0] == "READ_DATA"):
+            if (len(m) < 2):
+                return "NEED HASH CODE"
+            hash_code = m[1]
+            return str(self.head.data.read(hash_code))
 
         if (m[0] == "DELETE"):
             if (len(m) < 2):

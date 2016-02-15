@@ -68,7 +68,10 @@ def main():
     print("#######################################################################")
 
     while True:
-        cmd_string = input("Enter a command or type H for help: " or "!")
+        try:
+          cmd_string = input("Enter a command or type H for help: " or "!")
+        except EOFError:
+          cmd_string = 'X'
         if not (len(cmd_string) == 0):
             cmd = cmd_string.upper().split()
             if cmd[0] == 'H':
@@ -114,7 +117,8 @@ def main():
             elif cmd[0] == 'D':
                 print("Delete Data")
             elif cmd[0] == 'RN':
-                print("Read Network Data...")
+                hash_code = cmd[1] if len(cmd) is 2 else config.test_key
+                print(bd.read_from_net(hash_code))
             elif cmd[0] == 'DN':
                 hash_code = cmd[1] if len(cmd) is 2 else config.test_key
                 print(bd.delete_from_net(hash_code))

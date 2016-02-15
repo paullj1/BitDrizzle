@@ -152,11 +152,19 @@ class BitDrizzle:
     #
     '''
 
-    def read_from_net(self):
-        return
+    def read_from_net(self, hash_code):
+        start_time = time.time()
+        data = self.myNode.readFromNet(hash_code)
+        total_real_time = time.time() - start_time
+        total_bytes = len(data)
+        return "Read {0} bytes in {1} seconds and got:\n{2}".format(total_bytes, total_real_time, data)
 
     def read_local(self):
-        return
+        start_time = time.time()
+        data = self.myNode.readLocal(hash_code)
+        total_real_time = time.time() - start_time
+        total_bytes = len(data)
+        return "Read {0} bytes in {1} seconds and got:\n{2}".format(total_bytes, total_real_time, data)
 
     def delete_from_net(self):
         return
