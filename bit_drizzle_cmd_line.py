@@ -84,47 +84,41 @@ def main():
             elif cmd[0] == 'FN':
                 print("Found network at: " + bd.find_net())
             elif cmd[0] == 'LH':
-                try:
-                    print(bd.locate_hash(cmd[1]))
-                except Exception as e:
-                    print(bd.locate_hash(config.test_key))
+                print(bd.locate_hash(cmd[0] if len(cmd) is 2 else config.test_key)
             elif cmd[0] == 'JN':
                 print(bd.join_net())
             elif cmd[0] == 'RI':
-                try:
-                    print(bd.get_net_neighbors(cmd[1]))
-                except Exception as e:
-                    print(bd.get_net_neighbors("FULL"))
+                print(bd.get_net_neighbors(cmd[1] if len(cmd) is 2 else "FULL"))
             elif cmd[0] == 'LN':
                 print("Leave Network")
             elif cmd[0] == 'SZ':
                 print("Get Network Size")
             elif cmd[0] == 'WL':
-                file_contents = ""
-                try:
-                    file_contents = file_reader(cmd[1])
-                except Exception as e:
-                    file_contents = file_reader(config.data_file)
-                try:
-                    piece_size = str(cmd[2])
-                except Exception as e:
-                    piece_size = config.piece_size
+                file_contents = file_reader(cmd[1] if len(cmd) is 2 and os.access(cmd[1]) else config.data_file)
+                piece_size = (str(cmd[2]) if len(cmd) is 3 else config.piece_size
                 print(bd.write_local(file_contents, piece_size))
+            elif cmd[0] == 'RL':
+                hash_code = cmd[1] if len(cmd) is 2 else config.test_key
+                print(bd.read_local(hash_code))
+                #print("Read Data at " + hash_code)
+            elif cmd[0] == 'DL':
+                hash_code = cmd[1] if len(cmd) is 2 else config.test_key
+                print(bd.delete_local(hash_code))
+                #print("Delete Data at " + hash_code)
             elif cmd[0] == 'WN':
-                file_contents = ""
-                try:
-                    file_contents = file_reader(cmd[1])
-                except Exception as e:
-                    file_contents = file_reader(config.data_file)
-                try:
-                    piece_size = str(cmd[2])
-                except Exception as e:
-                    piece_size = config.piece_size
+                file_contents = file_reader(cmd[1] if len(cmd) is 2 and os.access(cmd[1]) else config.data_file)
+                piece_size = (str(cmd[2]) if len(cmd) is 3 else config.piece_size
                 print(bd.write_to_net(file_contents, piece_size))
             elif cmd[0] == 'R':
                 print("Read Data")
             elif cmd[0] == 'D':
                 print("Delete Data")
+            elif cmd[0] == 'RN':
+                print("Read Network Data...")
+            elif cmd[0] == 'DN':
+                hash_code = cmd[1] if len(cmd) is 2 else config.test_key
+                print(bd.delete_from_net(hash_code))
+                #print("Delete Data at " + hash_code)
             elif cmd[0] == 'LD':
                 print(bd.local_dump().encode('cp437', errors='replace'))
             elif cmd[0] == 'PD':
