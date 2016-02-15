@@ -116,10 +116,10 @@ class LocalHead:
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)
         # put a header so the app_support server knows what to do with the data string
-        msg = "READ_DATA|{0}".format(key)
-        print(msg)
+        msg = "READ_DATA|{0}|{1}|{2}".format(key, client_info[0], client_info[1])
+
         # send the data and return
-        return client.connect_send__receive_close(client_info[0], int(client_info[1]), msg)
+        return client.connect_send__receive_close(self.host, self.port, msg)
 
     def readLocal(self, key):
         value = self.data.read(key)

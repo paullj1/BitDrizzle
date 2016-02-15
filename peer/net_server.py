@@ -194,6 +194,8 @@ class Simple_Server():
 		#Implement these handlers 			
         if (m[0] == "READ_DATA"):
             key = m[1]
+            print("Trying to read key: {0}".format(key))
+            print("My info: {0}:{1}".format(self.host, self.port))
             return self.head.data.read(key)
 
         #not using this, just write("0")

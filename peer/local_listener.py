@@ -101,10 +101,16 @@ class Simple_Listener():
             return "OK"
 
         if (m[0] == "READ_DATA"):
-            if (len(m) < 2):
-                return "NEED HASH CODE"
+            if (len(m) < 4):
+                return "NEED HASH CODE & TARGET HOST"
             hash_code = m[1]
-            return str(self.head.data.read(hash_code))
+            host = m[2]
+            port = m[3]
+            print("Hash code received at local_listener {0}".format(hash_code))
+            print("My info {0}:{1}".format(self.host, self.port))
+            print("Destination {0}:{1}".format(host, port))
+
+            return str(self.head.router.read(hash_code, self.head.router.getEntry()))
 
         if (m[0] == "DELETE"):
             if (len(m) < 2):
