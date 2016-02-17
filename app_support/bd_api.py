@@ -3,6 +3,7 @@ import config
 from app_support.local_head import LocalHead
 from peer.peer_head import Drizzler
 
+
 class BitDrizzle:
 
     def __init__(self):
@@ -152,6 +153,9 @@ class BitDrizzle:
     #
     '''
 
+# For the record:  Original github code:
+#   def read_from_net(self, hash_code):
+#       return
     def read_from_net(self, hash_code: str) -> str:
         start_time = time.time()
         data = self.myNode.readFromNet(hash_code)
@@ -159,6 +163,8 @@ class BitDrizzle:
         total_bytes = len(data)
         return "Read {0} bytes in {1} seconds and got:\n{2}".format(total_bytes, total_real_time, data)
 
+#   def read_local(self, hash_code):
+#       return self.myNode.readLocal(hash_code)
     def read_local(self, hash_code: str) -> str:
         start_time = time.time()
         data = self.myNode.readLocal(hash_code)
@@ -166,12 +172,16 @@ class BitDrizzle:
         total_bytes = len(data)
         return "Read {0} bytes in {1} seconds and got:\n{2}".format(total_bytes, total_real_time, data)
 
+#   def delete_from_net(self, hash_code):
+#       return self.myNode.deleteFromNet(hash_code)
     def delete_from_net(self, hash_code: str) -> str:
         start_time = time.time()
         data = self.myNode.deleteFromNet(hash_code)
         total_real_time = time.time() - start_time
         return "Deleted key {0} in {1} seconds.".format(hash_code, total_real_time)
 
+#   def delete_local(self, hash_code):
+#       return self.myNode.deleteLocal(hash_code)
     def delete_local(self,hash_code: str) -> str:
         start_time = time.time()
         self.myNode.deleteLocal(hash_code)
