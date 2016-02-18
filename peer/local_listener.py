@@ -85,7 +85,7 @@ class Simple_Listener():
             if (len(m) < 2):
                 return "NEED HASH CODE"
             hash_code = m[1]
-            return self.head.router.lookup(hash_code, self.head.router.getEntry()).toString()
+            return str(self.head.router.lookup(hash_code, self.head.router.getEntry()))
 
         if (m[0] == "JOIN_NETWORK"):
             return self.head.joinNetwork()
@@ -108,12 +108,11 @@ class Simple_Listener():
             hash_code = m[1]
             data_succ = self.head.router.lookup(hash_code, self.head.router.succ)
             if (self.head.router.write(hash_code, "0", data_succ)):
-                return "Deleted: " + hash_code + " from " + data_succ.toString()
+                return "Deleted: {0} from {1}".format(hash_code, str(data_succ))
             return "DELETE FAILED!"
-            #return self.head.router.lookup(hash_code, self.head.router.getEntry()).toString()
 
         if (m[0] == "DUMP_PEER_DATA"):
-            return self.head.data.toString()
+            return str(self.head.data)
 
         if (m[0] == "PING"):
             return "OK"

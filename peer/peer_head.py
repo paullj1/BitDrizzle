@@ -37,7 +37,7 @@ class PeerHead:
         r_node = self.router.find_peer(host, self.start_port, self.port_range)
         #The remote host and remote port will be set as the DHT entry point for this node
         self.router.setEntry(r_node)
-        return r_node.toString()
+        return str(r_node)
 
     def joinNetwork(self):
         #LOOKUP OF THIS NODE:#####################################################
@@ -58,7 +58,7 @@ class PeerHead:
         self.router.setSucc(succ)
         # the successor should default to succ as well
         self.router.setEntry(succ)
-        return ("Joined at: " + succ.toString())
+        return "Joined at: {}".format(str(succ))
 
     def getFullNetStatus(self):
         return ("######### Node " + str(self.router.port) + " Routing Information########|\n" +

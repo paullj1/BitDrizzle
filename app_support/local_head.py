@@ -114,7 +114,7 @@ class LocalHead:
 
     #for printing the data
     def DumpLocalData(self):
-        return self.data.toString()
+        return str(self.data)
 
     #for printing the data
     def DumpPeerData(self):

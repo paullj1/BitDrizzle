@@ -10,8 +10,8 @@ class NetNode:
 
     # implements MD5 hash over the string that describes the host and port of the remote node
     def getHashedID(self):
-        id_string = self.host + str(self.port)
+        id_string = "{0}{1}".format(self.host,str(self.port))
         return hashlib.md5(id_string.encode('utf-8')).hexdigest().upper()
 
-    def toString(self):
-        return self.host + "," + str(self.port) + "," + self.hash
+    def __str__(self):
+        return "{0},{1},{2}".format(self.host,str(self.port),self.hash)
