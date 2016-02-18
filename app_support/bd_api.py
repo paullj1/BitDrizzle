@@ -98,7 +98,7 @@ class BitDrizzle:
         return self.myNode.joinNetwork()
 
     def remove_from_net(self):
-        return
+        return self.myNode.leaveNetwork()
 
     def get_net_size(self):
         return

@@ -62,6 +62,20 @@ class PeerHead:
         self.router.setEntry(succ)
         return "Joined at: {}".format(str(succ))
 
+    def leaveNetwork(self):
+        #DELETE NODE#############################################################
+        # Get my pointers now so they don't go away
+        myPred = self.router.getPred()
+        mySucc = self.router.getSucc()
+
+        # Set my pred's succ to be my succ
+        self.router.setSucc(mySucc)
+        # Set my succ's pred to be my pred
+        self.router.setPred(myPred)
+        # Set entry in case it was me
+        self.router.setEntry(mySucc)
+        return "Left network"
+
     def getFullNetStatus(self):
         return ("######### Node " + str(self.router.port) + " Routing Information########|\n" +
                 "SELF:" + self.node.hash + "|" + self.node.host + "|" + str(self.node.port) + "|\n"

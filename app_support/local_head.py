@@ -43,8 +43,7 @@ class LocalHead:
             msg = "GET_NET_STAT|CSV"
 
         # send the data and return
-        response = client.connect_send__receive_close(self.host, self.port, msg)
-        return response
+        return client.connect_send__receive_close(self.host, self.port, msg)
 
 	# ask the peer_head to find a network entry node
     def findPeer(self):
@@ -52,8 +51,7 @@ class LocalHead:
         client = Simple_Client(self.host, self.port)
         msg = "FIND_PEER|" + self.host
         # send the data and return
-        response = client.connect_send__receive_close(self.host, self.port, msg)
-        return response
+        return client.connect_send__receive_close(self.host, self.port, msg)
 
 	# ask the peer_head to find a network entry node
     def locateHash(self, hash):
@@ -61,8 +59,7 @@ class LocalHead:
         client = Simple_Client(self.host, self.port)
         msg = "LOOKUP|" + hash
         # send the data and return
-        response = client.connect_send__receive_close(self.host, self.port, msg)
-        return response
+        return client.connect_send__receive_close(self.host, self.port, msg)
 
 	# ask the peer_head to find a network entry node
     def joinNetwork(self):
@@ -70,8 +67,15 @@ class LocalHead:
         client = Simple_Client(self.host, self.port)
         msg = "JOIN_NETWORK|"
         # send the data and return
-        response = client.connect_send__receive_close(self.host, self.port, msg)
-        return response
+        return client.connect_send__receive_close(self.host, self.port, msg)
+
+	# ask the peer_head to find a network entry node
+    def leaveNetwork(self):
+        # we need a client to talk to the peer head
+        client = Simple_Client(self.host, self.port)
+        msg = "LEAVE_NETWORK|"
+        # send the data and return
+        return client.connect_send__receive_close(self.host, self.port, msg)
 
     # function writes to the app_support store
     def writeLocal(self, value):
@@ -128,5 +132,4 @@ class LocalHead:
         client = Simple_Client(self.host, self.port)
         msg = "DUMP_PEER_DATA|"
         # send the data and return
-        response = client.connect_send__receive_close(self.host, self.port, msg)
-        return response
+        return client.connect_send__receive_close(self.host, self.port, msg)

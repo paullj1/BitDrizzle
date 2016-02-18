@@ -92,6 +92,9 @@ class Simple_Listener():
         if (m[0] == "JOIN_NETWORK"):
             return self.head.joinNetwork()
 
+        if (m[0] == "LEAVE_NETWORK"):
+            return self.head.leaveNetwork()
+
         if (m[0] == "WRITE_DATA"):
             key = m[1]         #hash_code being sent as a lookup
             value = m[2]         #host of the requester

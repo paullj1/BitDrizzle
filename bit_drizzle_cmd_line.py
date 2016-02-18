@@ -93,7 +93,7 @@ def main():
             elif cmd[0] == 'RI':
                 print(bd.get_net_neighbors(cmd[1] if len(cmd) is 2 else "FULL"))
             elif cmd[0] == 'LN':
-                print("Leave Network")
+                print(bd.remove_from_net())
             elif cmd[0] == 'SZ':
                 print("Get Network Size")
             elif cmd[0] == 'WL':
