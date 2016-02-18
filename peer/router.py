@@ -107,7 +107,6 @@ class Router:
         # the server at succ is contacted, response is the pred node of our node
         response = client.attempt_to_connect(succ_node.host, succ_node.port, msg)
         # the server returned the predecessor
-        #print ("Insert:" + response)
         if response == "":
             print("NO INSERT RESPONSE ERROR!")
             exit(0)
@@ -120,6 +119,31 @@ class Router:
         pred_node = NetNode(pred_host, (int(pred_port)))
         # then we stop and return the remote node
         return pred_node
+
+    def leave(self, pred_node, succ_node):
+        ### First update successor of our predecessor
+        # create a client for this operation
+        client = Simple_Client(self.host, self.port)
+        # the insert request is like lookup
+        msg = "UPDATE_SUCC|{0}|{1}|{2}".format(succ_node.hash, succ_node.host, succ_node.port)
+        # the server at succ is contacted, response is the pred node of our node
+        response = client.attempt_to_connect(pred_node.host, pred_node.port, msg)
+        # the server returned the predecessor
+        if response == "":
+            print("NO INSERT RESPONSE ERROR!")
+            exit(0)
+
+        ### Next, update predecessor of our successor
+        msg = "UPDATE_PRED|{0}|{1}|{2}".format(pred_node.hash, pred_node.host, pred_node.port)
+        # the server at succ is contacted, response is the pred node of our node
+        response = client.attempt_to_connect(succ_node.host, succ_node.port, msg)
+        # the server returned the successor
+        if response == "":
+            print("NO INSERT RESPONSE ERROR!")
+            exit(0)
+
+        # Okay
+        return "OK"
 
     def write(self, key, value, succ_node):
         # create a client for this operation

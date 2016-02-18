@@ -134,18 +134,18 @@ class Simple_Server():
         
         if (m[0] == "INSERT"):
             #insert()
-            code = m[1]  #hash_code being sent in insert
-            host = m[2]   #host of the requester
-            port = int(m[3])  #port of the requester
+            new_pred_code = m[1]  #hash_code being sent in insert
+            new_pred_host = m[2]   #host of the requester
+            new_pred_port = int(m[3])  #port of the requester
             # we need to save the old pred info in case we overwrite the object
             old_pred_code = self.head.router.pred.hash
             old_pred_host = self.head.router.pred.host
             old_pred_port = self.head.router.pred.port
             #creating the new predecessor object from the message
-            new_pred = NetNode(host, port)
+            new_pred = NetNode(new_pred_host, new_pred_port)
 
             #if this is a new network, set all to the new node, return self info
-            if ((old_pred_code == self.head.node.hash) &
+            if ((old_pred_code == self.head.node.hash) and
                 (self.head.router.succ.hash == self.head.node.hash)):
                 self.head.router.setPred(new_pred)
                 self.head.router.setSucc(new_pred)
@@ -156,7 +156,7 @@ class Simple_Server():
             # we need a temp client for that
             temp_client = Simple_Client(self.host, self.port)
             # craft a message for the old_pred server to update its successor to the new pred
-            msg = "UPDATE_SUCC" + "|" + code + "|" + host + "|" + str(port)
+            msg = "UPDATE_SUCC" + "|" + new_pred_code + "|" + new_pred_host + "|" + str(new_pred_port)
 			
             # connect to the current predecessor to update pointer to succ            
             response = temp_client.attempt_to_connect(old_pred_host, old_pred_port, msg)
@@ -168,7 +168,20 @@ class Simple_Server():
                 return (old_pred_code + ":" + old_pred_host + ":" + str(old_pred_port))
             #else:
             return ""
-        
+
+
+        if (m[0] == "UPDATE_PRED"):
+            #update_succ()
+            code = m[1]  #hash_code being sent in update_pred is that of the new pred
+            host = m[2]   #host of the new pred
+            port = int(m[3])  #port of the new pred 
+            #creating the new successor object from the message
+            new_pred = NetNode(host, port)
+            #updating the app_support node
+            self.head.router.setPred(new_pred)
+            #no error checking yet
+            return "UPDATED_PRED_OK"
+                        
         if (m[0] == "UPDATE_SUCC"):
             #update_succ()
             code = m[1]  #hash_code being sent in update_succ is that of the new succ

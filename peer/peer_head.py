@@ -49,6 +49,9 @@ class PeerHead:
         succ = self.router.lookup(self.node.hash, self.router.getEntry())
         #print ("Did lookup! Host: " + succ.host + " at  Port: " + str(succ.port) + " Hash: " + succ.hash)
 
+        if type(succ) is not str and self.node.hash == succ.hash:
+          return "Already a member of network"
+
         #INSERT NODE#############################################################
         #Insert sets pred, succ after coordination in the network
         pred = self.router.insert(self.node.hash, succ)
@@ -67,14 +70,9 @@ class PeerHead:
         # Get my pointers now so they don't go away
         myPred = self.router.getPred()
         mySucc = self.router.getSucc()
-
-        # Set my pred's succ to be my succ
-        self.router.setSucc(mySucc)
-        # Set my succ's pred to be my pred
-        self.router.setPred(myPred)
-        # Set entry in case it was me
-        self.router.setEntry(mySucc)
-        return "Left network"
+        if self.router.leave(myPred, mySucc) == "OK":
+            return "Left network"
+        return "Error leaving network"
 
     def getFullNetStatus(self):
         return ("######### Node " + str(self.router.port) + " Routing Information########|\n" +
