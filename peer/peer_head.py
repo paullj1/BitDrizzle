@@ -47,6 +47,9 @@ class PeerHead:
         succ = self.router.lookup(self.node.hash, self.router.getEntry())
         #print ("Did lookup! Host: " + succ.host + " at  Port: " + str(succ.port) + " Hash: " + succ.hash)
 
+        if self.node.hash == succ.hash:
+          return "Already a member of network"
+
         #INSERT NODE#############################################################
         #Insert sets pred, succ after coordination in the network
         pred = self.router.insert(self.node.hash, succ)
