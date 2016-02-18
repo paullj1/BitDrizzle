@@ -103,21 +103,10 @@ class LocalHead:
 	#Implement these functions
 
     def readFromNet(self, key):
-        # Check to make sure we don't have it first
-        result = self.data.read(key)
-        if result != "failed read":
-          return result
-
-        # Where is the data?
-        client_info = self.locateHash(key).split(',') 
-        if len(client_info) < 2:
-          return "FAILED TO LOCATE NODE" # Shouldn't happen
-
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)
         # put a header so the app_support server knows what to do with the data string
-        msg = "READ_DATA|{0}|{1}|{2}".format(key, client_info[0], client_info[1])
-
+        msg = "READ_DATA|{0}".format(key)
         # send the data and return
         return client.connect_send__receive_close(self.host, self.port, msg)
 
