@@ -70,6 +70,14 @@ class LocalHead:
         return client.connect_send__receive_close(self.host, self.port, msg)
 
 	# ask the peer_head to find a network entry node
+    def networkSize(self):
+        # we need a client to talk to the peer head
+        client = Simple_Client(self.host, self.port)
+        msg = "NETWORK_SIZE|"
+        # send the data and return
+        return client.connect_send__receive_close(self.host, self.port, msg)
+
+	# ask the peer_head to find a network entry node
     def leaveNetwork(self):
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)

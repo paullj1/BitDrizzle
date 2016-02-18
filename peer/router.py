@@ -65,7 +65,7 @@ class Router:
         # create a client for this operation
         client = Simple_Client(self.host, self.port)
         # the lookup request is always the same
-        msg = "LOOKUP" + "|" + hash_code + "|" + self.host + "|" + str(self.port)
+        msg = "LOOKUP|{0}|{1}|{2}".format(hash_code, self.host, self.port)
 
         succ_node = NetNode("None", 0)
 
@@ -102,7 +102,7 @@ class Router:
         # create a client for this operation
         client = Simple_Client(self.host, self.port)
         # the insert request is like lookup
-        msg = "INSERT" + "|" + hash_code + "|" + self.host + "|" + str(self.port)
+        msg = "INSERT|{0}|{1}|{2}".format(hash_code, self.host, self.port)
 
         # the server at succ is contacted, response is the pred node of our node
         response = client.attempt_to_connect(succ_node.host, succ_node.port, msg)
@@ -125,7 +125,7 @@ class Router:
         # create a client for this operation
         client = Simple_Client(self.host, self.port)
         # the insert request is like lookup
-        msg = "WRITE_DATA" + "|" + key + "|" + value + "|" + self.host + "|" + str(self.port)
+        msg = "WRITE_DATA|{0}|{1}|{2}|{3}".format(key, value, self.host, self.port)
 
         # the server at succ is contacted, response is the okay
         response = client.attempt_to_connect(succ_node.host, succ_node.port, msg)
@@ -140,7 +140,7 @@ class Router:
         # create a client for this operation
         client = Simple_Client(self.host, self.port)
         # the insert request is like lookup
-        msg = "READ_DATA" + "|" + key + "|" + self.host + "|" + str(self.port)
+        msg = "READ_DATA|{0}|{1}|{2}".format(key, self.host, self.port)
 
         # the server at succ is contacted, response is the okay
         response = client.attempt_to_connect(succ_node.host, succ_node.port, msg)
@@ -150,3 +150,40 @@ class Router:
         if response == " ":
             return None
         return response
+
+    def getNetSize(self, hash_code):
+        # create a client for this operation
+        client = Simple_Client(self.host, self.port)
+        # the lookup request is always the same
+        msg = "LOOKUP|{0}|{1}|{2}".format(hash_code, self.host, self.port)
+
+        succ_node = NetNode("None", 0)
+
+        # since this implementation of lookup is iterative, so we need to keep track of the nodes we've queried
+        # the last hash inits as the code we are looking for, but is updated as the last node we checked
+        last_hash = hash_code
+        # our successor's hash inits as the entry node of the lookup
+        succ_hash = self.succ.hash
+        succ_host = self.succ.host
+        succ_port = self.succ.port
+        # if the pred and succ hashes ever are equal, it means that the node we are going to check next
+        # is the same node as the one we just checked, which means we are done searching
+        count = 0
+        while not (last_hash == succ_hash):
+            count = count + 1
+        
+            # the server at succ is contacted, response is the succ node to the hash
+            response = client.attempt_to_connect(succ_host, succ_port, msg)
+            # since we just checked succ, we can copy that info to last_hash
+            last_hash = succ_hash
+            # the response should be a few strings, separated by ':', but there is no type checking, sorry
+            if not response == "":
+                # the response contained the next node to check, so it is assigned to the current successor
+                succ_hash, succ_host, succ_port_str = response.split(':')
+                # succ_port_str was sent as a string and now is converted to an int
+                succ_port = int(succ_port_str)
+            else:
+                return("NO LOOKUP RESPONSE ERROR!")
+
+        # the server returned self or its succ, if it returned self, then we will exit the loop and return
+        return "Total nodes in network: {0}".format(count)

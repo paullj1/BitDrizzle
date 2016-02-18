@@ -95,7 +95,7 @@ def main():
             elif cmd[0] == 'LN':
                 print(bd.remove_from_net())
             elif cmd[0] == 'SZ':
-                print("Get Network Size")
+                print(bd.get_net_size())
             elif cmd[0] == 'WL':
                 file_contents = file_reader(cmd[1] if len(cmd) is 2 and os.access(cmd[1]) else config.data_file)
                 try:

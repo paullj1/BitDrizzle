@@ -89,6 +89,9 @@ class Simple_Listener():
             hash_code = m[1]
             return str(self.head.router.lookup(hash_code, self.head.router.getEntry()))
 
+        if (m[0] == "NETWORK_SIZE"):
+            return str(self.head.router.getNetSize(self.head.router.getPred().hash))
+
         if (m[0] == "JOIN_NETWORK"):
             return self.head.joinNetwork()
 

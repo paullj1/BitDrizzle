@@ -101,7 +101,7 @@ class BitDrizzle:
         return self.myNode.leaveNetwork()
 
     def get_net_size(self):
-        return
+        return self.myNode.networkSize()
 
     def set_new_net_size(self):
         return
