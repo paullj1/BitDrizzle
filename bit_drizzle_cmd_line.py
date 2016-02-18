@@ -98,8 +98,11 @@ def main():
                 print("Get Network Size")
             elif cmd[0] == 'WL':
                 file_contents = file_reader(cmd[1] if len(cmd) is 2 and os.access(cmd[1]) else config.data_file)
-                piece_size = (str(cmd[2]) if len(cmd) is 3 else config.piece_size)
-                print(bd.write_local(file_contents, piece_size))
+                try:
+                    piece_size = (int(cmd[2]) if len(cmd) is 3 else config.piece_size)
+                    print(bd.write_local(file_contents, piece_size))
+                except ValueError:
+                    print("Piece size must be a positive integer")
             elif cmd[0] == 'RL':
                 hash_code = cmd[1] if len(cmd) is 2 else config.test_key
                 print(bd.read_local(hash_code))
@@ -110,8 +113,11 @@ def main():
                 #print("Delete Data at " + hash_code)
             elif cmd[0] == 'WN':
                 file_contents = file_reader(cmd[1] if len(cmd) is 2 and os.access(cmd[1]) else config.data_file)
-                piece_size = (str(cmd[2]) if len(cmd) is 3 else config.piece_size)
-                print(bd.write_to_net(file_contents, piece_size))
+                try:
+                    piece_size = (int(cmd[2]) if len(cmd) is 3 else config.piece_size)
+                    print(bd.write_local(file_contents, piece_size))
+                except ValueError:
+                    print("Piece size must be a positive integer")
             elif cmd[0] == 'RN':
                 print("Read Network Data...")
             elif cmd[0] == 'DN':
