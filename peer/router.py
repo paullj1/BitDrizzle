@@ -192,7 +192,7 @@ class Router:
         succ_port = self.succ.port
         # if the pred and succ hashes ever are equal, it means that the node we are going to check next
         # is the same node as the one we just checked, which means we are done searching
-        count = 0
+        count = 1 # to account for first node
         while not (last_hash == succ_hash):
             count = count + 1
         
