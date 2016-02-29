@@ -35,38 +35,42 @@ class PeerHead:
         self.local_listener.serve()
 
     def findPeer(self, host):
-        #the function below finds the host we contacted
+        # the function below finds the host we contacted
         r_node = self.router.find_peer(host, self.start_port, self.port_range)
-        #The remote host and remote port will be set as the DHT entry point for this node
+        # The remote host and remote port will be set as the DHT entry point
+        # for this node
         self.router.setEntry(r_node)
         return str(r_node)
 
     def joinNetwork(self):
-        #LOOKUP OF THIS NODE:#####################################################
-        #If the Router gave us a peer, then we can lookup in the network
-        #First call lookup( ) to get the location where we belong in the network (succ(my_id))
-        #Lookup of hashed_ID will give us the succ
+        #LOOKUP OF THIS NODE:##################################################
+        # If the Router gave us a peer, then we can lookup in the network
+        # First call lookup( ) to get the location where we belong in the
+        # network (succ(my_id))
+        # Lookup of hashed_ID will give us the succ
         succ = self.router.lookup(self.node.hash, self.router.getEntry())
         #print ("Did lookup! Host: " + succ.host + " at  Port: " + str(succ.port) + " Hash: " + succ.hash)
 
         if type(succ) is not str and self.node.hash == succ.hash:
-          return "Already a member of network"
+            return "Already a member of network"
 
-        #INSERT NODE#############################################################
-        #Insert sets pred, succ after coordination in the network
+        #INSERT NODE###########################################################
+        # Insert sets pred, succ after coordination in the network
         pred = self.router.insert(self.node.hash, succ)
         #print ("Did insert! Host: " + pred.host + " at  Port: " + str(pred.port) + " Hash: " + pred.hash)
 
-        # We can set pred and succ now, probably could add error checks (for null) and a loop to retry
+        # We can set pred and succ now, probably could add error checks (for
+        # null) and a loop to retry
         self.router.setPred(pred)
-        # they should also be set at the same time so they are consistent in the network
+        # they should also be set at the same time so they are consistent in
+        # the network
         self.router.setSucc(succ)
         # the successor should default to succ as well
         self.router.setEntry(succ)
         return "Joined at: {}".format(str(succ))
 
     def leaveNetwork(self):
-        #DELETE NODE#############################################################
+        #DELETE NODE###########################################################
         # Get my pointers now so they don't go away
         myPred = self.router.getPred()
         mySucc = self.router.getSucc()
@@ -76,25 +80,29 @@ class PeerHead:
 
     def getFullNetStatus(self):
         return ("######### Node " + str(self.router.port) + " Routing Information########|\n" +
-                "SELF:" + self.node.hash + "|" + self.node.host + "|" + str(self.node.port) + "|\n"
-                "PRED:" + self.router.getPred().hash + "|" + self.router.getPred().host + "|" + str(self.router.getPred().port)+ "|\n"
-                "SUCC:" + self.router.getSucc().hash + "|" + self.router.getSucc().host + "|" + str(self.router.getSucc().port)+ "|\n"  )
+                "SELF:" + self.node.hash + "|" + self.node.host +
+                "|" + str(self.node.port) + "|\n"
+                "PRED:" + self.router.getPred().hash + "|" + self.router.getPred().host +
+                "|" + str(self.router.getPred().port) + "|\n"
+                "SUCC:" + self.router.getSucc().hash + "|" + self.router.getSucc().host + "|" + str(self.router.getSucc().port) + "|\n")
 
     def getCSVNetStatus(self):
-        return(str(self.router.port) + "," + self.node.hash + "," + self.node.host + "," + str(self.node.port) +    #this node info
-            "," + self.router.getPred().hash + "," + self.router.getPred().host + "," + str(self.router.getPred().port) +  #pred node
-            "," + self.router.getSucc().hash + "," + self.router.getSucc().host + "," + str(self.router.getSucc().port) )     #succ node
+        return(str(self.router.port) + "," + self.node.hash + "," + self.node.host + "," + str(self.node.port) +  # this node info
+               "," + self.router.getPred().hash + "," + self.router.getPred().host + "," + str(self.router.getPred().port) +  # pred node
+               "," + self.router.getSucc().hash + "," + self.router.getSucc().host + "," + str(self.router.getSucc().port))  # succ node
 
 
 logging.basicConfig(level=logging.DEBUG,
                     format='(%(threadName)-10s) %(message)s',
                     )
 
+
 class Drizzler(threading.Thread):
 
     '''
     Initialization/Constructor
     '''
+
     def __init__(self, group=None, target=None, name=None,
                  args=(), kwargs=None):
         threading.Thread.__init__(self, group=group, target=target, name=name)
@@ -117,7 +125,8 @@ class Drizzler(threading.Thread):
     def run(self):
         logging.debug('running with %s', self.args)
 
-        self.peer_head = PeerHead(self.host, self.peer_port, self.peer_sock, self.local_sock, self.start_port, self.port_range)
+        self.peer_head = PeerHead(self.host, self.peer_port, self.peer_sock,
+                                  self.local_sock, self.start_port, self.port_range)
 
         self.peer_head.start_peer_server()
 
@@ -128,4 +137,4 @@ class Drizzler(threading.Thread):
             self.peer_head.joinNetwork()
 
         while True:
-           time.sleep(10)
+            time.sleep(10)

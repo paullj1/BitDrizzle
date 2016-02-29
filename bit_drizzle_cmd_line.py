@@ -11,6 +11,8 @@ Modified by Colin Busho, Kevin Cooper, Paul Jordan, and Chip Van Patten
 Last Modified:  14 Feb 2016
 '''
 import time
+import config
+import os
 
 from app_support.bd_api import BitDrizzle
 
@@ -36,22 +38,22 @@ def print_command_line_help():
     print("                         - option K takes a key, default is test_key entry in config.py")
     print("X - Exit BitDrizzle: Just exits the app")
 
+
 def file_reader(file_name):
     file_contents = ""
-    #opening the file
+    # opening the file
     with open('test_file.txt', 'r') as myfile:
-        #read all the bytes and replace line returns with a blank
-        file_contents=myfile.read().replace('\n', '')
+        # read all the bytes and replace line returns with a blank
+        file_contents = myfile.read().replace('\n', '')
     return file_contents
 
-
-import config
 
 '''
 Main program:
 '''
+
+
 def main():
-    import os
     os.system("mode con: cols=120 lines=75")
     print("Welcome to BitDrizzle CLI!")
     bd = BitDrizzle()
@@ -69,9 +71,9 @@ def main():
 
     while True:
         try:
-          cmd_string = input("Enter a command or type H for help: " or "!")
+            cmd_string = input("Enter a command or type H for help: " or "!")
         except EOFError:
-          cmd_string = 'X'
+            cmd_string = 'X'
         if not (len(cmd_string) == 0):
             cmd = cmd_string.upper().split()
             if cmd[0] == 'H':
@@ -87,34 +89,40 @@ def main():
             elif cmd[0] == 'FN':
                 print("Found network at: " + bd.find_net())
             elif cmd[0] == 'LH':
-                print(bd.locate_hash(cmd[0] if len(cmd) is 2 else config.test_key))
+                print(bd.locate_hash(cmd[0] if len(
+                    cmd) is 2 else config.test_key))
             elif cmd[0] == 'JN':
                 print(bd.join_net())
             elif cmd[0] == 'RI':
-                print(bd.get_net_neighbors(cmd[1] if len(cmd) is 2 else "FULL"))
+                print(bd.get_net_neighbors(
+                    cmd[1] if len(cmd) is 2 else "FULL"))
             elif cmd[0] == 'LN':
                 print(bd.remove_from_net())
             elif cmd[0] == 'SZ':
                 print(bd.get_net_size())
             elif cmd[0] == 'WL':
-                file_contents = file_reader(cmd[1] if len(cmd) is 2 and os.access(cmd[1]) else config.data_file)
+                file_contents = file_reader(cmd[1] if len(
+                    cmd) is 2 and os.access(cmd[1]) else config.data_file)
                 try:
-                    piece_size = (int(cmd[2]) if len(cmd) is 3 else config.piece_size)
+                    piece_size = (int(cmd[2]) if len(
+                        cmd) is 3 else config.piece_size)
                     print(bd.write_local(file_contents, piece_size))
                 except ValueError:
                     print("Piece size must be a positive integer")
             elif cmd[0] == 'RL':
                 hash_code = cmd[1] if len(cmd) is 2 else config.test_key
                 print(bd.read_local(hash_code))
-                #print("Read Data at " + hash_code)
+                # print("Read Data at " + hash_code)
             elif cmd[0] == 'DL':
                 hash_code = cmd[1] if len(cmd) is 2 else config.test_key
                 print(bd.delete_local(hash_code))
-                #print("Delete Data at " + hash_code)
+                # print("Delete Data at " + hash_code)
             elif cmd[0] == 'WN':
-                file_contents = file_reader(cmd[1] if len(cmd) is 2 and os.access(cmd[1]) else config.data_file)
+                file_contents = file_reader(cmd[1] if len(
+                    cmd) is 2 and os.access(cmd[1]) else config.data_file)
                 try:
-                    piece_size = (int(cmd[2]) if len(cmd) is 3 else config.piece_size)
+                    piece_size = (int(cmd[2]) if len(
+                        cmd) is 3 else config.piece_size)
                     print(bd.write_local(file_contents, piece_size))
                 except ValueError:
                     print("Piece size must be a positive integer")
@@ -134,13 +142,12 @@ def main():
                 print(bd.local_dump().encode('cp437', errors='replace'))
             elif cmd[0] == 'PD':
                 print(bd.peer_dump().encode('cp437', errors='replace'))
-            elif cmd[0] == 'X':             #just a hard crash really
+            elif cmd[0] == 'X':  # just a hard crash really
                 print("Exiting Application")
                 time.sleep(1)
                 os._exit(0)
             else:
                 print("Command Not Found")
-
 
 
 # main entry point to program

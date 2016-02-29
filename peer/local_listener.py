@@ -19,6 +19,7 @@ class Simple_Listener():
     '''
     Initialization/Constructor
     '''
+
     def __init__(self, sock, peer_head):
         self.sock = sock
         self.head = peer_head
@@ -28,45 +29,51 @@ class Simple_Listener():
     def serve(self):
         # opens the socket for messages
         self.sock.listen(2)
-        #logging.debug('Waiting for app_support connections')
+        # logging.debug('Waiting for app_support connections')
         # calls the function that accepts connections
         t = threading.Thread(target=self.acceptConnections)
         t.start()
         return
 
     '''
-    Function definition accepts and handles incoming connections in a single threaded fashion
+    Function definition accepts and handles incoming connections in a single
+    threaded fashion
     '''
+
     def acceptConnections(self):
 
         while (True):
             ''' accept a connection and call the respond method... '''
             try:
-                conn, addr = self.sock.accept()   #Accepts the connection on the socket determined above
-                #Debug the connection information of the client
-                #logging.debug('Local Server at %s Connected to: %s at %s', self.port, addr[0], str(addr[1]))
-                self.respond(conn)                              #jumps to respond function
+                # Accepts the connection on the socket determined above
+                conn, addr = self.sock.accept()
+                # Debug the connection information of the client
+                # logging.debug('Local Server at %s Connected to: %s at %s', self.port, addr[0], str(addr[1]))
+                self.respond(conn)  # jumps to respond function
             except:
                 continue
-
 
     '''
     Function to handle the server response to the client
     '''
+
     def respond(self, conn):
 
         msg = ''
-        data = conn.recv(2048)                  # stores information received from the socket as the variable data
+        # stores information received from the socket as the variable data
+        data = conn.recv(2048)
         msg = data.decode('utf-8')
-        #logging.debug('Message at Local server: %s', msg)
+        # logging.debug('Message at Local server: %s', msg)
         reply = self.performAction(msg)
-        conn.sendall(reply.encode())                     # sends the reply over the socket.
-
+        # sends the reply over the socket.
+        conn.sendall(reply.encode())
 
     '''
-    Server simulates the doing of an action with a fixed service time. Feel free to alter this
-    function by adding a service time based on a random distribution for extra credit.
+    Server simulates the doing of an action with a fixed service time. Feel
+    free to alter this function by adding a service time based on a random
+    distribution for extra credit.
     '''
+
     def performAction(self, msg):
 
         m = msg.split('|')
@@ -99,10 +106,10 @@ class Simple_Listener():
             return self.head.leaveNetwork()
 
         if (m[0] == "WRITE_DATA"):
-            key = m[1]         #hash_code being sent as a lookup
-            value = m[2]         #host of the requester
+            key = m[1]  # hash_code being sent as a lookup
+            value = m[2]  # host of the requester
             data_succ = self.head.router.lookup(key, self.head.router.succ)
-            #logging.debug(data_succ.hash)
+            # logging.debug(data_succ.hash)
             self.head.router.write(key, value, data_succ)
             return "OK"
 
@@ -111,14 +118,16 @@ class Simple_Listener():
             if (len(m) < 2):
                 return "NEED HASH CODE"
             hash_code = m[1]
-            succ = self.head.router.lookup(hash_code, self.head.router.getEntry())
+            succ = self.head.router.lookup(
+                hash_code, self.head.router.getEntry())
             return str(self.head.router.read(hash_code, succ))
 
         if (m[0] == "DELETE"):
             if (len(m) < 2):
                 return "NEED HASH CODE"
             hash_code = m[1]
-            data_succ = self.head.router.lookup(hash_code, self.head.router.succ)
+            data_succ = self.head.router.lookup(
+                hash_code, self.head.router.succ)
             if (self.head.router.write(hash_code, "0", data_succ)):
                 return "Deleted: {0} from {1}".format(hash_code, str(data_succ))
             return "DELETE FAILED!"

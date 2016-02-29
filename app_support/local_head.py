@@ -11,29 +11,32 @@ Modified by _______________, Date:
 from common.data_store import Data, DataItem
 from common.port_client import Simple_Client
 
+
 class LocalHead:
 
     # initiate the class with the host and port of the listener
     def __init__(self, host, port):
-        #also init the app_support data hash table
+        # also init the app_support data hash table
         self.data = Data()
         self.host = host
         self.port = port
         return
 
-    # function checks if port is receiving messages, which happens after peer is networked to the DHT
+    # function checks if port is receiving messages, which happens after peer
+    # is networked to the DHT
     def hasListener(self):
         response = ""
         client = Simple_Client(self.host, self.port)
         try:
-            response = client.connect_send__receive_close(self.host, self.port, "PING|")
+            response = client.connect_send__receive_close(
+                self.host, self.port, "PING|")
         except:
             return False
         if response == "OK":
             return True
         return False
 
-	# ask the peer_head if this node is in the network
+        # ask the peer_head if this node is in the network
     def getNeighbors(self, mode):
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)
@@ -45,7 +48,7 @@ class LocalHead:
         # send the data and return
         return client.connect_send__receive_close(self.host, self.port, msg)
 
-	# ask the peer_head to find a network entry node
+        # ask the peer_head to find a network entry node
     def findPeer(self):
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)
@@ -53,7 +56,7 @@ class LocalHead:
         # send the data and return
         return client.connect_send__receive_close(self.host, self.port, msg)
 
-	# ask the peer_head to find a network entry node
+        # ask the peer_head to find a network entry node
     def locateHash(self, hash):
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)
@@ -61,7 +64,7 @@ class LocalHead:
         # send the data and return
         return client.connect_send__receive_close(self.host, self.port, msg)
 
-	# ask the peer_head to find a network entry node
+        # ask the peer_head to find a network entry node
     def joinNetwork(self):
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)
@@ -69,7 +72,7 @@ class LocalHead:
         # send the data and return
         return client.connect_send__receive_close(self.host, self.port, msg)
 
-	# ask the peer_head to find a network entry node
+        # ask the peer_head to find a network entry node
     def networkSize(self):
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)
@@ -77,7 +80,7 @@ class LocalHead:
         # send the data and return
         return client.connect_send__receive_close(self.host, self.port, msg)
 
-	# ask the peer_head to find a network entry node
+        # ask the peer_head to find a network entry node
     def leaveNetwork(self):
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)
@@ -93,13 +96,14 @@ class LocalHead:
         self.data.write(d_item.key, d_item.value)
         return d_item.key
 
-	# function writes to the network
+        # function writes to the network
     def writeToNet(self, value: str) -> str:
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)
-        # put a header so the app_support server knows what to do with the data string
+        # put a header so the app_support server knows what to do with the data
+        # string
         d_item = DataItem(value)
-        msg = "WRITE_DATA|{0}|{1}".format(d_item.key,d_item.value)
+        msg = "WRITE_DATA|{0}|{1}".format(d_item.key, d_item.value)
         # send the data and return
         client.connect_send__receive_close(self.host, self.port, msg)
         return d_item.key
@@ -107,17 +111,19 @@ class LocalHead:
     def deleteFromNet(self, key: str) -> str:
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)
-        # put a header so the app_support server knows what to do with the data string
+        # put a header so the app_support server knows what to do with the data
+        # string
         msg = "DELETE|" + key
         # send the data and return
         return client.connect_send__receive_close(self.host, self.port, msg)
 
-	#Implement these functions
+        # Implement these functions
 
     def readFromNet(self, key):
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)
-        # put a header so the app_support server knows what to do with the data string
+        # put a header so the app_support server knows what to do with the data
+        # string
         msg = "READ_DATA|{0}".format(key)
         # send the data and return
         return client.connect_send__receive_close(self.host, self.port, msg)
@@ -130,11 +136,11 @@ class LocalHead:
         self.data.write(key, "0")
         return ("Deleted " + key)
 
-    #for printing the data
+    # for printing the data
     def DumpLocalData(self) -> str:
         return str(self.data)
 
-    #for printing the data
+    # for printing the data
     def DumpPeerData(self) -> str:
         # we need a client to talk to the peer head
         client = Simple_Client(self.host, self.port)
