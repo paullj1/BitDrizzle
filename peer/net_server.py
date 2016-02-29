@@ -105,22 +105,22 @@ class Simple_Server():
 
             # 4 ways that the lookup returns my node (SELF RESPONSES INDICATE Completion)
             # 1: if pred = mine = succ: (one node network)
-            if (pred == mine) & (mine == succ):
+            if (pred == mine) and (mine == succ):
                 #send succ(hash_code) = mine ID back to client
                 return (mine + ":" + self.host + ":" + str(self.port))
-            # 2: if pred < hash_code & hash_code <= self & pred < self:
+            # 2: if pred < hash_code and hash_code <= self and pred < self:
             # (no boundary check, if my node is the last, but not the first)
-            if (pred < code) & (code <= mine) & (pred  < mine):
+            if (pred < code) and (code <= mine) and (pred  < mine):
                 #send succ(hash_code) = mine ID back to client
                 return (mine + ":" + self.host + ":" + str(self.port))
-            # 3: if pred < hash_code & hash_code > self & pred > self:
+            # 3: if pred < hash_code and hash_code > self and pred > self:
             # (pred is last node before flip, id first after, hash is before the flip)
-            if (pred < code) & (code > mine) & (pred  > mine):
+            if (pred < code) and (code > mine) and (pred  > mine):
                 #send succ(hash_code) = mine ID back to client
                 return (mine + ":" + self.host + ":" + str(self.port))         
-            # 4: if pred > hash_code & hash_code <= self & pred > self:
+            # 4: if pred > hash_code and hash_code <= self and pred > self:
             # (pred is last node before flip, id first after, hash is after the flip)
-            if (pred > code) & (code <= mine) & (pred  > mine):
+            if (pred > code) and (code <= mine) and (pred  > mine):
                 #send succ(hash_code) = mine ID back to client
                 return (mine + ":" + self.host + ":" + str(self.port)) 
 
